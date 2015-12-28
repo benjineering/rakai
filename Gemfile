@@ -1,4 +1,4 @@
 ruby '2.2.1'
+source 'https://rubygems.org'
 
 gem 'bindata', '2.1'
-gem 'serialport', '1.3.1'

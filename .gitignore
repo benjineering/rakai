@@ -1,1 +1,4 @@
 spec/disk_images/test_program_and_60_volumes.akai
+Gemfile.lock
+rakai-*.gem
+
