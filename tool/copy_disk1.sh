@@ -1,7 +1,7 @@
 #!/bin/bash
 
-IN_FILE="/dev/disk1"
-OUT_FILE="disk1_dump.akai"
+IN_FILE="/dev/rdisk3"
+OUT_FILE="three_volumes.akai"
 
 BLOCK_SIZE="1024"
 BLOCK_COUNT="524288"
