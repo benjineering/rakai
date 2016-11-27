@@ -1,4 +1,4 @@
-ruby '2.2.1'
 source 'https://rubygems.org'
 
-gem 'bindata', '2.1'
+# Specify your gem's dependencies in rakai.gemspec
+gemspec
