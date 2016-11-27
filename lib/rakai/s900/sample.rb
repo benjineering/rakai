@@ -45,7 +45,7 @@ containing the upper 8 bits of the last N/2 words.
 
       bit48 :six_zeros
 
-      uint32 :sample_length
+      uint32 :sample_words
 
       uint16 :sample_rate
 
@@ -65,8 +65,17 @@ containing the upper 8 bits of the last N/2 words.
 
       bit160 :gibberish
 
+      array :data, type: :sbit12, read_until: lambda { index == sample_words - 1 }
+
       def to_s
-        puts "#{file_name} length: #{sample_length}, rate: #{sample_rate}Hz"
+        puts "#{file_name} length: #{sample_words}, rate: #{sample_rate}Hz"
+      end
+
+      def pcm
+        data.collect do |word|
+          puts word.to_i
+          word.to_i
+        end
       end
     end
   end
