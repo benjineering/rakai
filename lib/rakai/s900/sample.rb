@@ -39,13 +39,15 @@ containing the upper 8 bits of the last N/2 words.
 
 =end
     class Sample < BinData::Record
+      WORD_BIT_COUNT = 12
+
       endian :little
 
       string :file_name, length: 10
 
       bit48 :six_zeros
 
-      uint32 :sample_words
+      uint32 :sample_word_count
 
       uint16 :sample_rate
 
@@ -65,17 +67,50 @@ containing the upper 8 bits of the last N/2 words.
 
       bit160 :gibberish
 
-      array :data, type: :sbit12, read_until: lambda { index == sample_words - 1 }
+      array :data, type: :int8, read_until: lambda { index == sample_word_count - 1 }
 
       def to_s
-        puts "#{file_name} length: #{sample_words}, rate: #{sample_rate}Hz"
+        puts "#{file_name} length: #{sample_word_count}, rate: #{sample_rate}Hz"
       end
 
+      # converts weird S900/950 sample data format to 12bit PCM
       def pcm
-        data.collect do |word|
-          puts word.to_i
-          word.to_i
+
+        # return value
+        buffer = Array.new(sample_word_count, 0)
+
+        # buffer halfway mark
+        n_2 = sample_word_count / 2
+
+        is_odd_byte = true
+
+        data.each_with_index do |data_byte, data_index|
+
+          if data_index < n_2
+            if is_odd_byte
+
+              # The upper 4 bits of the first byte contains the lower 4 bits of 
+              # the first word
+              buffer[data_index] = (0b11110000 & data_byte) >> 4
+
+              # The lower 4 bits of the first byte contain the lower 4 bits of 
+              # word N/2
+              buffer[n_2 + data_index] = 0b00001111 & data_byte
+
+            # The second byte contains the upper 8 bits of the first word
+            else
+              buffer[data_index] = data_byte << 4
+            end
+
+            is_odd_byte = !is_odd_byte
+
+          # N/2 bytes containing the upper 8 bits of the last N/2 words.
+          else
+            buffer[data_index] &= data_byte << 4
+          end
         end
+
+        buffer
       end
     end
   end
