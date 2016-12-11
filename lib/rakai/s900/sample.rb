@@ -73,14 +73,14 @@ containing the upper 8 bits of the last N/2 words.
         puts "#{file_name} length: #{sample_word_count}, rate: #{sample_rate}Hz"
       end
 
-      # converts weird S900/950 sample data format to 12bit PCM
+      # converts weird 12bit S900/950 sample data format to 16bit PCM
       def pcm
 
         # return value
         buffer = Array.new(sample_word_count, 0)
 
         # buffer halfway mark
-        n_2 = sample_word_count / 2
+        n_2 = (sample_word_count / 2) - 1
 
         is_odd_byte = true
 
@@ -100,6 +100,7 @@ containing the upper 8 bits of the last N/2 words.
             # The second byte contains the upper 8 bits of the first word
             else
               buffer[data_index] = data_byte << 4
+              buffer[data_index] = buffer[data_index] << 4 # convert to 16bit
             end
 
             is_odd_byte = !is_odd_byte
@@ -107,6 +108,7 @@ containing the upper 8 bits of the last N/2 words.
           # N/2 bytes containing the upper 8 bits of the last N/2 words.
           else
             buffer[data_index] &= data_byte << 4
+            buffer[data_index] = buffer[data_index] << 4 # convert to 16bit
           end
         end
 
