@@ -7,23 +7,26 @@ include WaveFile
 
 module Rakai
   BLOCK_SIZE = 1024
-
-  def self.trim_str(str)
-    str.gsub(/\s+$/, '')
-  end
 end
 
 
-disk_file = File.open('/Users/ben/repos/rakai/spec/disk_images/S900/808.img')
-s9000_808 = Rakai::S900::Volume.read(disk_file)
-entry = s9000_808.indices.first
+image_name = 'sk1'
+disk_file = File.open("/Users/ben/repos/rakai/spec/disk_images/S900/#{image_name}.img")
+volume = Rakai::S900::Volume.read(disk_file)
 
-disk_file.seek(entry.start_block * Rakai::BLOCK_SIZE)
-sample = Rakai::S900::Sample.read(disk_file)
-format = Format.new(:mono, :pcm_16, sample.sample_rate.to_i)
-buffer = Buffer.new(sample.pcm, format)
-file_name = Rakai.trim_str(sample.file_name)
+volume.indices.each do |entry|
+  if entry.file_type == "S"
+    puts entry
 
-Writer.new("/Users/ben/Desktop/#{file_name}.wav", format) do |writer|
-  writer.write(buffer)
+    disk_file.seek(entry.start_block * Rakai::BLOCK_SIZE)
+    sample = Rakai::S900::Sample.read(disk_file)
+
+    format = Format.new(:mono, :pcm_16, sample.sample_rate.to_i)
+    buffer = Buffer.new(sample.pcm, format)
+    file_name = sample.file_name.to_s.rstrip
+
+    Writer.new("/Users/ben/Desktop/#{file_name}.wav", format) do |writer|
+      writer.write(buffer)
+    end
+  end
 end
