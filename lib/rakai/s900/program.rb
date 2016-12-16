@@ -1,8 +1,8 @@
-require 'bindata'
+require 'rakai/base/program'
 
 module Rakai
   module S900
-    class Program < BinData::Record
+    class Program < Rakai::Base::Program
 
     end
   end

@@ -1,4 +1,4 @@
-require 'bindata'
+require 'rakai/base/index_entry'
 
 module Rakai
   module S900    
@@ -29,9 +29,7 @@ Note that the S950 can use high-density disks and can read S1000 disks, but the
 S900 can only read S900 or S950 low-density disks.
 
 =end
-    class IndexEntry < BinData::Record
-      endian :little
-
+    class IndexEntry < Rakai::Base::IndexEntry
       string :file_name, length: 10
 
       bit48 :six_zeros
@@ -43,14 +41,6 @@ S900 can only read S900 or S950 low-density disks.
       uint16 :start_block
 
       uint16 :s900_id
-
-      def valid?
-        file_length > 0
-      end
-
-      def to_s
-        puts "'#{file_name}', type: '#{file_type}', length: '#{file_length}', start: '#{start_block}'"
-      end
     end
   end
 end

@@ -1,4 +1,3 @@
-
 =begin rdoc
 Character    ASCII       AKAII
 ----------------------------------
@@ -50,7 +49,7 @@ module Rakai
           str += chr unless chr.nil?
         end
 
-        str
+        str.rstrip
       end
 
       # Returns a character, or nil if byte is not valid Akai String format

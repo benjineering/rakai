@@ -1,4 +1,4 @@
-require 'bindata'
+require 'rakai/base/sample'
 
 module Rakai
   module S900
@@ -38,11 +38,7 @@ first word. This repeats for the first N bytes, after which there are N/2 bytes
 containing the upper 8 bits of the last N/2 words.
 
 =end
-    class Sample < BinData::Record
-      WORD_BIT_COUNT = 12
-
-      endian :little
-
+    class Sample < Rakai::Base::Sample
       string :file_name, length: 10
 
       bit48 :six_zeros
@@ -68,10 +64,6 @@ containing the upper 8 bits of the last N/2 words.
       bit160 :gibberish
 
       array :data, type: :int8, read_until: lambda { index == sample_word_count - 1 }
-
-      def to_s
-        puts "#{file_name} length: #{sample_word_count}, rate: #{sample_rate}Hz"
-      end
 
       # converts weird 12bit S900/950 sample data format to 16bit PCM
       def pcm

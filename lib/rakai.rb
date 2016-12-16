@@ -1,21 +1,20 @@
+require 'rakai/s900/sample'
 require 'rakai/s900/volume'
 require 'rakai/version'
 require 'wavefile'
 
 include WaveFile
 
-
 module Rakai
   BLOCK_SIZE = 1024
 end
-
 
 image_name = 'sk1'
 disk_file = File.open("/Users/ben/repos/rakai/spec/disk_images/S900/#{image_name}.img")
 volume = Rakai::S900::Volume.read(disk_file)
 
 volume.indices.each do |entry|
-  if entry.file_type == "S"
+  if entry.file_type == 'S'
     puts entry
 
     disk_file.seek(entry.start_block * Rakai::BLOCK_SIZE)
