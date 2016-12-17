@@ -2,10 +2,10 @@ require 'rakai/base/base'
 
 module Rakai
   module Base
-    class Volume < Base
+    class VolumeEntry < Base
 
-      def to_s
-        name.to_s
+      def valid?
+        start_block > 0
       end
     end
   end

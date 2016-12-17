@@ -1,10 +1,8 @@
-require 'bindata'
+require 'rakai/base/base'
 
 module Rakai
   module Base
-    class Program < BinData::Record
-      endian :little
-      
+    class Program < Base
     end
   end
 end

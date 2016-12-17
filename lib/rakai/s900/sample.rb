@@ -63,7 +63,9 @@ containing the upper 8 bits of the last N/2 words.
 
       bit160 :gibberish
 
-      array :data, type: :int8, read_until: lambda { index == sample_word_count - 1 }
+      array :data, read_until: lambda { index == sample_word_count - 1 } do
+        int8
+      end
 
       # converts weird 12bit S900/950 sample data format to 16bit PCM
       def pcm

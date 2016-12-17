@@ -1,9 +1,8 @@
-require 'bindata'
+require 'rakai/base/base'
 
 module Rakai
   module Base
-    class Sample < BinData::Record
-      endian :little
+    class Sample < Base
 
       def to_s
         puts "#{file_name} length: #{sample_word_count}, rate: #{sample_rate}Hz"

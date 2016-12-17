@@ -1,3 +1,5 @@
+module Rakai
+  module S1000
 =begin rdoc
 Character    ASCII       AKAII
 ----------------------------------
@@ -9,14 +11,12 @@ Character    ASCII       AKAII
  -           45          39
  .           46          40
 =end
-module Rakai
-  module S1000
     class AkaiString < BinData::Primitive
       mandatory_parameter :length
 
       alias_method :to_ascii, :to_s
 
-      array :data, :initial_length => :length do
+      array :data, initial_length: :length do
         bit8le
       end
 

@@ -1,31 +1,26 @@
 require 'rakai/s900/sample'
 require 'rakai/s900/volume'
+
+require 'rakai/s3000/disk'
+require 'rakai/s3000/sample'
+require 'rakai/s3000/volume'
+require 'rakai/s3000/volume_entry'
+
 require 'rakai/version'
+
 require 'wavefile'
 
 include WaveFile
 
-module Rakai
-  BLOCK_SIZE = 1024
-end
+image_name = 'black_tar_test_rdisk.akai'
+image_format = Rakai::S3000
 
-image_name = 'sk1'
-disk_file = File.open("/Users/ben/repos/rakai/spec/disk_images/S900/#{image_name}.img")
-volume = Rakai::S900::Volume.read(disk_file)
+disk_dir = image_format.to_s.split('::').last
+disk_path = "/Users/ben/repos/rakai/spec/disk_images/#{disk_dir}/#{image_name}"
+disk_file = File.open(disk_path)
 
-volume.indices.each do |entry|
-  if entry.file_type == 'S'
-    puts entry
+disk = image_format::Disk.read(disk_file)
 
-    disk_file.seek(entry.start_block * Rakai::BLOCK_SIZE)
-    sample = Rakai::S900::Sample.read(disk_file)
-
-    format = Format.new(:mono, :pcm_16, sample.sample_rate.to_i)
-    buffer = Buffer.new(sample.pcm, format)
-    file_name = sample.file_name.to_s.rstrip
-
-    Writer.new("/Users/ben/Desktop/#{file_name}.wav", format) do |writer|
-      writer.write(buffer)
-    end
-  end
+disk.volume_index.each do |volume_entry|
+  puts volume_entry
 end
