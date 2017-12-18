@@ -1,4 +1,4 @@
-require 'rakai/base/loop_marker'
+require 'rakai/base'
 
 module Rakai
   module S1000
@@ -12,7 +12,7 @@ Length   Format      Description
   2     unsigned    Loop 1 time          (msec. or 9999=infinite) 
 
 =end
-    class LoopMarker < Rakai::Base::LoopMarker
+    class LoopMarker < Rakai::Base
       uint32 :start
 
       uint16 :fine_length

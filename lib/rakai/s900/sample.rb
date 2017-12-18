@@ -1,4 +1,4 @@
-require 'rakai/base/sample'
+require 'rakai/base'
 
 module Rakai
   module S900
@@ -38,7 +38,7 @@ first word. This repeats for the first N bytes, after which there are N/2 bytes
 containing the upper 8 bits of the last N/2 words.
 
 =end
-    class Sample < Rakai::Base::Sample
+    class Sample < Rakai::Base
       string :file_name, length: 10
 
       bit48 :six_zeros

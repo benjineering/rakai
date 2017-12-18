@@ -1,4 +1,4 @@
-require 'rakai/base/volume'
+require 'rakai/base'
 require 'rakai/s1000/index_entry'
 
 module Rakai
@@ -17,7 +17,7 @@ Note that the S01 uses the S1000 format for disks and samples, but with an ID of
 uses the same format with a different ID.
 
 =end
-    class Volume < Rakai::Base::Volume
+    class Volume < Rakai::Base
   
       array :file_index, type: :index_entry, initial_length: 64
 

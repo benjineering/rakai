@@ -1,4 +1,4 @@
-require 'rakai/base/index_entry'
+require 'rakai/base'
 require 'rakai/s1000/akai_string'
 
 module Rakai
@@ -43,7 +43,7 @@ Note that the S01 uses the S1000 format for disks and samples, but with an ID of
 uses the same format with a different ID.
 
 =end
-    class IndexEntry < Rakai::Base::IndexEntry
+    class IndexEntry < Rakai::Base
       akai_string :file_name, length: 12
 
       array :four_integers, initial_length: 4 do

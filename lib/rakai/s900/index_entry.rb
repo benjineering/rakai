@@ -1,4 +1,4 @@
-require 'rakai/base/index_entry'
+require 'rakai/base'
 
 module Rakai
   module S900    
@@ -29,7 +29,7 @@ Note that the S950 can use high-density disks and can read S1000 disks, but the
 S900 can only read S900 or S950 low-density disks.
 
 =end
-    class IndexEntry < Rakai::Base::IndexEntry
+    class IndexEntry < Rakai::Base
       string :file_name, length: 10
 
       bit48 :six_zeros

@@ -1,4 +1,4 @@
-require 'rakai/base/partition'
+require 'rakai/base'
 require 'rakai/s1000/akai_string'
 
 module Rakai
@@ -11,9 +11,9 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
 =end
 
 
-    class Partition < Rakai::Base::Partition
+    class Partition < Rakai::Base
 
-      class VolumeIndexEntry < Rakai::Base::Partition
+      class VolumeIndexEntry < Rakai::Base
         akai_string :name, length: 12
         uint16 :start_block
         uint16 :num

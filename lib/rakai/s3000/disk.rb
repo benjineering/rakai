@@ -1,4 +1,4 @@
-require 'rakai/base/disk'
+require 'rakai/base'
 require 'rakai/s3000/volume'
 require 'rakai/s3000/partition'
 
@@ -10,7 +10,8 @@ Unable to find any info about disks with multiple partitions, so this is from my
 own experimentation using an S2000 with an internal SCSI SD card drive.
 
 =end
-    class Disk < Rakai::Base::Disk
+    class Disk < Rakai::Base
+      MAX_BLOCKS = 65536
       MAX_SIZE = 536870912 # 512MB
 
       array :partitions, read_until: -> {

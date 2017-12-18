@@ -1,8 +1,8 @@
-require 'rakai/base/program'
+require 'rakai/base'
 
 module Rakai
   module S900
-    class Program < Rakai::Base::Program
+    class Program < Rakai::Base
 
     end
   end

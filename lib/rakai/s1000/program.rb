@@ -1,4 +1,4 @@
-require 'rakai/base/program'
+require 'rakai/base'
 
 module Rakai
   module S1000
@@ -130,7 +130,7 @@ byte     description                 default     range/comments
  150     (not used)
 
 =end
-    class Program < Rakai::Base::Program
+    class Program < Rakai::Base
       # TODO
     end
   end

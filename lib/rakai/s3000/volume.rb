@@ -1,4 +1,4 @@
-require 'rakai/base/volume'
+require 'rakai/base'
 require 'rakai/s3000/index_entry'
 
 module Rakai
@@ -12,7 +12,7 @@ ignored, and 512 entries starting at block 5 will be used instead.
 The first 17 map entries are marked with the value 16384.
 
 =end
-    class Volume < Rakai::Base::Volume
+    class Volume < Rakai::Base
       #hide :map_and_padding, :three_zeros
 
       #skip length: BLOCK_SIZE * 4

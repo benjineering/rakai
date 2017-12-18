@@ -1,4 +1,4 @@
-require 'rakai/base/sample'
+require 'rakai/base'
 require 'rakai/s1000/akai_string'
 require 'rakai/s1000/loop_marker'
 
@@ -39,7 +39,7 @@ The S1000 sample file has a 150 byte header:
 The sample data follows the header as signed 16-bit words.
 
 =end
-    class Sample < Rakai::Base::Sample
+    class Sample < Rakai::Base
       uint8 :a_three
 
       uint8 :sample_rate_enum
