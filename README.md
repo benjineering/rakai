@@ -6,7 +6,7 @@ http://mda.smartelectronix.com/akai/akaiinfo.htm
 
 Currently miles from being usable.
 
-###Structure
+### Structure
 - Disk
   - Partions
     - Volumes
