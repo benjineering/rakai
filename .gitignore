@@ -1,4 +1,7 @@
-spec/disk_images/*
+.byebug_history
+.rspec
+
 Gemfile.lock
 rakai-*.gem
-.byebug_history
+
+spec/disk_images/*
