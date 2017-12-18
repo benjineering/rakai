@@ -14,8 +14,6 @@ Character    ASCII       AKAII
     class AkaiString < BinData::Primitive
       mandatory_parameter :length
 
-      alias_method :to_ascii, :to_s
-
       array :data, initial_length: :length do
         bit8le
       end
@@ -73,7 +71,11 @@ Character    ASCII       AKAII
             nil
           end
 
-          num.nil? ? "^#{byte.to_s}$" : num.chr
+          num.nil? ? nil : num.chr
+      end
+
+      def to_s
+        to_ascii
       end
     end
   end

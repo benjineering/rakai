@@ -76,7 +76,7 @@ The sample data follows the header as signed 16-bit words.
 
       bit80 :ten_zeros
 
-      array :data, read_until: lambda { index == sample_word_count - 1 } do
+      array :data, read_until: -> { index == sample_word_count - 1 } do
         int16
       end
       

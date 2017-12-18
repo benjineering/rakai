@@ -2,7 +2,7 @@ require 'rakai/base/base'
 
 module Rakai
   module Base
-    class VolumeEntry < Base
+    class Partition < Base
 
       def valid?
         start_block > 0

@@ -12,7 +12,7 @@ namespace :disk do
     disk = STDIN.gets.chomp
 
     puts 'ENTER OUTPATH:'
-    out = STDIN.gets.chomp
+    out = File.expand_path(STDIN.gets.chomp)
 
     cmd = "sudo dd if=/dev/#{disk} of=#{out} "\
       "bs=#{Disk::BLOCK_SIZE} count=#{Disk::MAX_BLOCKS}"
