@@ -44,7 +44,6 @@ uses the same format with a different ID.
 
 =end
     class IndexEntry < Rakai::Base::IndexEntry
-
       akai_string :file_name, length: 12
 
       array :four_integers, initial_length: 4 do
@@ -59,6 +58,18 @@ uses the same format with a different ID.
 
       array :version_id, initial_length: 2 do
         bit8
+      end
+
+      def offset
+        start_block * BLOCK_SIZE
+      end
+
+      def valid?
+        start_block > 0
+      end
+
+      def to_s
+        "#{file_name.to_s} @ #{offset}"
       end
     end
   end

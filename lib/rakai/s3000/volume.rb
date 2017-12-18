@@ -13,9 +13,9 @@ The first 17 map entries are marked with the value 16384.
 
 =end
     class Volume < Rakai::Base::Volume
-      array :legacy_index_blocks, initial_length: BLOCK_SIZE * 4 do
-        int8
-      end
+      #hide :map_and_padding, :three_zeros
+
+      #skip length: BLOCK_SIZE * 4
 
       array :file_index, initial_length: 512 do
         index_entry
@@ -32,6 +32,14 @@ The first 17 map entries are marked with the value 16384.
       uint8 :format_id
 
       bit80 :ten_numbers
+
+      def to_s
+        entries = file_index.collect do |e| 
+          e.valid? ? "  #{e.to_s}\n" : ''
+        end.join
+
+        "#{entries}"
+      end
     end
   end
 end

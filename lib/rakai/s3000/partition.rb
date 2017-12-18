@@ -12,6 +12,26 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
 
 
     class Partition < Rakai::Base::Partition
+
+      class VolumeIndexEntry < Rakai::Base::Partition
+        akai_string :name, length: 12
+        uint16 :start_block
+        uint16 :num
+
+        def valid?
+          start_block > 0
+        end
+
+        def offset
+          start_block * BLOCK_SIZE
+        end
+
+        def to_s
+          "#{name} @ #{offset}"
+        end
+      end
+
+
       MAX_VOLUMES = 100
       END_MARKER = 4095
       LETTERS = ('A'..'Z').to_a
@@ -21,11 +41,15 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
       uint16 :block_count
 
       buffer :buffer, length: -> { length }, onlyif: -> { valid? } do
-        uint16 :dummy
+        skip length: 200
 
-        #array :volumes, initial_length: MAX_VOLUMES do
-        #  volume
-        #end
+        array :volume_index, read_until: -> { !element.valid? } do
+          volume_index_entry
+        end
+
+        skip to_abs_offset: -> { volume_index.first.offset }, onlyif: -> { partition_index == 0 }
+
+        volume :vol, onlyif: -> { partition_index == 0 }
       end
 
       virtual :i, value: :partition_index
@@ -45,7 +69,8 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
       def to_s
         letter = LETTERS[i]
         mb = (length.to_f / 1024 / 1024).ceil
-        "#{letter}: #{mb}MB"
+        vol_entries = buffer.volume_index.collect { |v| v.to_s }.join("\n")
+        "#{letter}: #{mb}MB\n#{vol_entries}\n#{buffer.vol.to_s}"
       end
     end
   end

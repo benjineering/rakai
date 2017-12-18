@@ -12,8 +12,8 @@ require 'wavefile'
 
 include WaveFile
 
+#image_name = '3MB_partitions_A_to_Q'
 image_name = '60MB_partitions_A_to_I'
-#image_name = '60MB_partitions_A_to_I'
 image_format = Rakai::S3000
 
 disk_dir = image_format.to_s.split('::').last
@@ -22,11 +22,12 @@ disk_file = File.open(disk_path)
 
 puts image_name
 
-BinData::trace_reading do
+#BinData::trace_reading do
   image_format::Disk.read(disk_file).partitions.each do |part|
     puts part.to_s
+    puts
   end
-end
+#end
 
 =begin
 disk = image_format::Disk.read(disk_file)
