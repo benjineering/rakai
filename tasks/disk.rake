@@ -15,7 +15,7 @@ namespace :disk do
       block_count: Disk::MAX_BLOCKS
     }
 
-    o = OptionParser.new do |opts|
+    parser = OptionParser.new do |opts|
       opts.banner = 'Usage: rake disk:dump options'
 
       opts.on('--disk DISK_ID', 'Disk identifier (e.g. disk2)') do |d| 
@@ -35,8 +35,8 @@ namespace :disk do
       end
     end
 
-    args = o.order!(ARGV) {}
-    o.parse!(args)
+    args = parser.order!(ARGV) {}
+    parser.parse!(args)
 
     cmd = "sudo dd if=#{options[:disk]} of=#{options[:out]} "\
       "bs=#{options[:block_size]} count=#{options[:block_count]}"
