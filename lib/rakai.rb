@@ -1,5 +1,4 @@
 require 'rakai/version'
 
-module Rakai
-  
+module Rakai  
 end

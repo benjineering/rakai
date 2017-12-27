@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'rakai/S3000/disk'
+
+require 'thor'
+require 'terminal-table'
+
+module Rakai
+
+  module View
+    STYLE = { width: 80 }
+
+    Table = Terminal::Table
+
+    class Disk
+      HEADINGS = ['Partition', 'Volume Count']
+
+      def initialize(disk)
+        @disk = disk
+      end
+
+      def render
+        Table.new(headings: HEADINGS, style: STYLE) do |t|
+          @disk.partitions.each do |p|
+            t << [p.name, '']
+          end
+        end
+      end
+    end
+  end
+
+
+  Disk = S3000::Disk
+  DiskView = View::Disk
+
+
+  class CLI < Thor
+    desc 'disk PATH', 'reads an AKAI formatted disk at PATH'
+    def disk(path)
+      path = File.expand_path(path)
+      file = File.open(path)
+      disk = Disk.read(file)
+      view = DiskView.new(disk)
+      puts view.render
+    end
+  end
+end
+ 
+Rakai::CLI.start(ARGV)

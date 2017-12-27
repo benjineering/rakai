@@ -9,8 +9,6 @@ Unable to find any info about disks with multiple partitions, so this is from my
 own experimentation using an S2000 with an internal SCSI SD card drive.
 
 =end
-
-
     class Partition < Rakai::Base
 
       class VolumeIndexEntry < Rakai::Base
@@ -47,9 +45,9 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
           volume_index_entry
         end
 
-        #skip to_abs_offset: -> { volume_index.first.offset }, onlyif: -> { partition_index == 0 }
-        #
-        #volume :vol, onlyif: -> { partition_index == 0 }
+        skip to_abs_offset: -> { volume_index.first.offset }, onlyif: -> { partition_index == 0 }
+        
+        volume :vol, onlyif: -> { partition_index == 0 }
       end
 
       virtual :i, value: :partition_index
@@ -64,6 +62,10 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
 
       def valid?
         length > 0
+      end
+
+      def name
+        LETTERS[i]
       end
 
       def to_s
