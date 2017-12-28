@@ -45,9 +45,9 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
           volume_index_entry
         end
 
-        skip to_abs_offset: -> { volume_index.first.offset }, onlyif: -> { partition_index == 0 }
-        
-        volume :vol, onlyif: -> { partition_index == 0 }
+        #skip to_abs_offset: -> { volume_index.first.offset }, onlyif: -> { partition_index == 0 }
+        #
+        #volume :vol, onlyif: -> { partition_index == 0 }
       end
 
       virtual :i, value: :partition_index

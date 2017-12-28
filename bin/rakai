@@ -9,21 +9,32 @@ require 'terminal-table'
 module Rakai
 
   module View
-    STYLE = { width: 80 }
+    class Base
+      STYLE = { width: 80 }
+      HEADINGS = []
+      Table = Terminal::Table
 
-    Table = Terminal::Table
+      def table(style = {})
+        s = STYLE.dup
+        s.merge!(style)
+        Table.new(headings: HEADINGS, style: s) { |t| yield t }
+      end
+    end
 
-    class Disk
-      HEADINGS = ['Partition', 'Volume Count']
+
+    class Disk < Base
+      HEADINGS = ['Partition', 'Volumes']
 
       def initialize(disk)
         @disk = disk
       end
 
       def render
-        Table.new(headings: HEADINGS, style: STYLE) do |t|
+        table do |t|
           @disk.partitions.each do |p|
-            t << [p.name, '']
+            vols = p.volume_index.collect { |v| v.name.to_s }.join("\n")
+            t << [p.name, vols]
+            t.add_separator
           end
         end
       end
