@@ -1,7 +1,8 @@
-require 'rakai/base'
+require 'rakai/bin_data/base'
 
 module Rakai
-  module S1000
+  module BinData
+    module S1000
     
 =begin
 
@@ -130,8 +131,9 @@ byte     description                 default     range/comments
  150     (not used)
 
 =end
-    class Program < Rakai::Base
-      # TODO
+      class Program < Rakai::BinData::Base
+        # TODO
+      end
     end
   end
 end

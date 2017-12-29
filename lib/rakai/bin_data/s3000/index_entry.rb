@@ -1,7 +1,8 @@
-require 'rakai/s1000/index_entry'
+require 'rakai/bin_data/s1000/index_entry'
 
 module Rakai
-  module S3000
+  module BinData
+    module S3000
 =begin
 
 The S3000 disk has space for file entries and map the same as for the S1000, but 
@@ -38,7 +39,8 @@ sample number and % is S for mono and left-channel samples or R for right-channe
 samples.
 
 =end
-    class IndexEntry < Rakai::S1000::IndexEntry
+      class IndexEntry < Rakai::BinData::S1000::IndexEntry
+      end
     end
   end
 end

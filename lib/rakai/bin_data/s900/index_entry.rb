@@ -1,7 +1,8 @@
-require 'rakai/base'
+require 'rakai/bin_data/base'
 
 module Rakai
-  module S900    
+  module BinData
+    module S900    
 =begin rdoc
 
 S900/S950 disk format
@@ -29,18 +30,19 @@ Note that the S950 can use high-density disks and can read S1000 disks, but the
 S900 can only read S900 or S950 low-density disks.
 
 =end
-    class IndexEntry < Rakai::Base
-      string :file_name, length: 10
+      class IndexEntry < Rakai::BinData::Base
+        string :file_name, length: 10
 
-      bit48 :six_zeros
+        bit48 :six_zeros
 
-      string :file_type, length: 1
+        string :file_type, length: 1
 
-      bit24 :file_length
+        bit24 :file_length
 
-      uint16 :start_block
+        uint16 :start_block
 
-      uint16 :s900_id
+        uint16 :s900_id
+      end
     end
   end
 end

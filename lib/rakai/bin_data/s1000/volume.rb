@@ -1,8 +1,9 @@
-require 'rakai/base'
-require 'rakai/s1000/index_entry'
+require 'rakai/bin_data/base'
+require 'rakai/bin_data/s1000/index_entry'
 
 module Rakai
-  module S1000
+  module BinData
+    module S1000
 =begin
 
 The map now uses a value of 19152 as an end marker, and the first five blocks 
@@ -17,19 +18,20 @@ Note that the S01 uses the S1000 format for disks and samples, but with an ID of
 uses the same format with a different ID.
 
 =end
-    class Volume < Rakai::Base
-  
-      array :file_index, type: :index_entry, initial_length: 64
+      class Volume < Rakai::BinData::Base
+    
+        array :file_index, type: :index_entry, initial_length: 64
 
-      array :map_and_padding, type: :uint8, initial_length: map_and_padding_bytes
+        array :map_and_padding, type: :uint8, initial_length: map_and_padding_bytes
 
-      akai_string :name, length: 12
+        akai_string :name, length: 12
 
-      array :three_zeros, type: :uint8, initial_length: 3
+        array :three_zeros, type: :uint8, initial_length: 3
 
-      uint8 :format_id
+        uint8 :format_id
 
-      bit80 :ten_numbers
+        bit80 :ten_numbers
+      end
     end
   end
 end

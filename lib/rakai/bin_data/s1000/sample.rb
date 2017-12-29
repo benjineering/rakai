@@ -1,9 +1,10 @@
-require 'rakai/base'
-require 'rakai/s1000/akai_string'
-require 'rakai/s1000/loop_marker'
+require 'rakai/bin_data/base'
+require 'rakai/bin_data/s1000/akai_string'
+require 'rakai/bin_data/s1000/loop_marker'
 
 module Rakai
-  module S1000
+  module BinData
+    module S1000
 =begin
 
 The S1000 sample file has a 150 byte header:
@@ -39,49 +40,50 @@ The S1000 sample file has a 150 byte header:
 The sample data follows the header as signed 16-bit words.
 
 =end
-    class Sample < Rakai::Base
-      uint8 :a_three
+      class Sample < Rakai::BinData::Base
+        uint8 :a_three
 
-      uint8 :sample_rate_enum
+        uint8 :sample_rate_enum
 
-      uint8 :midi_root_note
+        uint8 :midi_root_note
 
-      akai_string :file_name, length: 12
+        akai_string :file_name, length: 12
 
-      uint8 :one_hundred_and_twenty_eight
+        uint8 :one_hundred_and_twenty_eight
 
-      uint8 :number_of_active_loops
+        uint8 :number_of_active_loops
 
-      uint8 :two_zeros
+        uint8 :two_zeros
 
-      uint8 :loop_mode_enum
+        uint8 :loop_mode_enum
 
-      int8 :cents_tune
+        int8 :cents_tune
 
-      int8 :semi_tune
+        int8 :semi_tune
 
-      uint8 :zero_eight_two_zero
+        uint8 :zero_eight_two_zero
 
-      uint32 :sample_word_count
+        uint32 :sample_word_count
 
-      uint32 :start_marker
+        uint32 :start_marker
 
-      uint32 :end_marker
+        uint32 :end_marker
 
-      array :loop, type: :loop_marker, length: 8
+        array :loop, type: :loop_marker, length: 8
 
-      uint32 :two_zeros_and_two_255s
+        uint32 :two_zeros_and_two_255s
 
-      uint16 :sample_rate
+        uint16 :sample_rate
 
-      bit80 :ten_zeros
+        bit80 :ten_zeros
 
-      array :data, read_until: -> { index == sample_word_count - 1 } do
-        int16
-      end
-      
-      def pcm
-        data.to_a
+        array :data, read_until: -> { index == sample_word_count - 1 } do
+          int16
+        end
+        
+        def pcm
+          data.to_a
+        end
       end
     end
   end

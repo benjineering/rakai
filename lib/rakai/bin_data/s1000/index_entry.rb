@@ -1,8 +1,9 @@
-require 'rakai/base'
-require 'rakai/s1000/akai_string'
+require 'rakai/bin_data/base'
+require 'rakai/bin_data/s1000/akai_string'
 
 module Rakai
-  module S1000
+  module BinData
+    module S1000
 =begin rdoc
 
 With the S1000, Akai abandon ASCII (mostly) and use their own alphanumeric code, 
@@ -43,33 +44,34 @@ Note that the S01 uses the S1000 format for disks and samples, but with an ID of
 uses the same format with a different ID.
 
 =end
-    class IndexEntry < Rakai::Base
-      akai_string :file_name, length: 12
+      class IndexEntry < Rakai::BinData::Base
+        akai_string :file_name, length: 12
 
-      array :four_integers, initial_length: 4 do
-        bit8
-      end
+        array :four_integers, initial_length: 4 do
+          bit8
+        end
 
-      akai_string :file_type, length: 1
+        akai_string :file_type, length: 1
 
-      bit24 :file_length
+        bit24 :file_length
 
-      uint16 :start_block
+        uint16 :start_block
 
-      array :version_id, initial_length: 2 do
-        bit8
-      end
+        array :version_id, initial_length: 2 do
+          bit8
+        end
 
-      def offset
-        start_block * BLOCK_SIZE
-      end
+        def offset
+          start_block * BLOCK_SIZE
+        end
 
-      def valid?
-        start_block > 0
-      end
+        def valid?
+          start_block > 0
+        end
 
-      def to_s
-        "#{file_name.to_s} @ #{offset}"
+        def to_s
+          "#{file_name.to_s} @ #{offset}"
+        end
       end
     end
   end

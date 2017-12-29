@@ -1,7 +1,8 @@
-require 'rakai/base'
+require 'rakai/bin_data/base'
 
 module Rakai
-  module S1000
+  module BinData
+    module S1000
 =begin
 
 Length   Format      Description
@@ -12,14 +13,15 @@ Length   Format      Description
   2     unsigned    Loop 1 time          (msec. or 9999=infinite) 
 
 =end
-    class LoopMarker < Rakai::Base
-      uint32 :start
+      class LoopMarker < Rakai::BinData::Base
+        uint32 :start
 
-      uint16 :fine_length
+        uint16 :fine_length
 
-      uint32 :coarse_length
+        uint32 :coarse_length
 
-      uint16 :time
+        uint16 :time
+      end
     end
   end
 end

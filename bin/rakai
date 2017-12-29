@@ -1,61 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'bundler/setup'
-require 'rakai/S3000/disk'
+require 'rakai/cli'
 
-require 'thor'
-require 'terminal-table'
-
-module Rakai
-
-  module View
-    class Base
-      STYLE = { width: 80 }
-      HEADINGS = []
-      Table = Terminal::Table
-
-      def table(style = {})
-        s = STYLE.dup
-        s.merge!(style)
-        Table.new(headings: HEADINGS, style: s) { |t| yield t }
-      end
-    end
-
-
-    class Disk < Base
-      HEADINGS = ['Partition', 'Volumes']
-
-      def initialize(disk)
-        @disk = disk
-      end
-
-      def render
-        table do |t|
-          @disk.partitions.each do |p|
-            vols = p.volume_index.collect { |v| v.name.to_s }.join("\n")
-            t << [p.name, vols]
-            t.add_separator
-          end
-        end
-      end
-    end
-  end
-
-
-  Disk = S3000::Disk
-  DiskView = View::Disk
-
-
-  class CLI < Thor
-    desc 'disk PATH', 'reads an AKAI formatted disk at PATH'
-    def disk(path)
-      path = File.expand_path(path)
-      file = File.open(path)
-      disk = Disk.read(file)
-      view = DiskView.new(disk)
-      puts view.render
-    end
-  end
-end
- 
 Rakai::CLI.start(ARGV)
