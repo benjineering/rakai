@@ -4,14 +4,18 @@ module Rakai
   module Model
     module S3000
       class Partition
-        attr_reader :name, :volumes
+        LETTERS = ('A'..'Z').to_a
 
-        def initialize(file, data)
-          @name = Partition.clean_partition_letter(data.name.to_s)
+        attr_reader :name, :volumes, :offset, :length
+
+        def initialize(file, data, index, offset)
+          @offset = offset
+          @length = data.length
+          @name = Partition.clean_partition_letter(LETTERS[index])
           @volumes = []
 
           data.volume_index.each do |v|
-            @volumes << Volume.new(file, v, 0) # TODO: fix offset
+            @volumes << Volume.new(file, v, @offset)
           end
         end
 

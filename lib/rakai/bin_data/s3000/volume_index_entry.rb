@@ -15,10 +15,6 @@ module Rakai
         def offset
           start_block * BLOCK_SIZE
         end
-
-        def to_s
-          "#{name} @ #{offset}"
-        end
       end
     end
   end

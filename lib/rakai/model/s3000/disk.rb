@@ -10,11 +10,13 @@ module Rakai
         def initialize(path)
           @file = ::File.open(::File.expand_path(path))
           data = Rakai::BinData::S3000::Disk.read(@file)
+          current_offset = 0
           @partitions = {}
 
-          data.partitions.each do |p|
-            part = Partition.new(@file, p)
+          data.partitions.each_with_index do |p, i|
+            part = Partition.new(@file, p, i, current_offset)
             @partitions[part.name] = part
+            current_offset += part.length
           end
         end
 

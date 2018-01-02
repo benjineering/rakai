@@ -66,11 +66,7 @@ uses the same format with a different ID.
         end
 
         def valid?
-          start_block > 0
-        end
-
-        def to_s
-          "#{file_name.to_s} @ #{offset}"
+          file_length > 0
         end
       end
     end

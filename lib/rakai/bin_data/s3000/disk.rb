@@ -24,10 +24,6 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
           partition partition_index: :index
         end
       end
-
-      def to_s
-        partitions.collect { |part| part.to_s }.join("\n")
-      end
     end
   end
 end

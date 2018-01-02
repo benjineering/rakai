@@ -14,10 +14,6 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
       class Partition < Rakai::BinData::Base
         MAX_VOLUMES = 100
         END_MARKER = 4095
-        LETTERS = ('A'..'Z').to_a
-
-        mandatory_parameter :partition_index
-        #mandatory_parameter :partition_offset
 
         uint16 :block_count
 
@@ -27,14 +23,7 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
           array :volume_index, read_until: -> { !element.valid? } do
             volume_index_entry
           end
-
-          #skip to_abs_offset: -> { volume_index.first.offset }, onlyif: -> { partition_index == 0 }
-          #
-          #volume :vol, onlyif: -> { partition_index == 0 }
         end
-
-        virtual :i, value: :partition_index
-        #virtual :offset, value: :partition_offset
 
         def length
           if block_count == END_MARKER || block_count == 0
@@ -46,17 +35,6 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
 
         def valid?
           length > 0
-        end
-
-        def name
-          LETTERS[i]
-        end
-
-        def to_s
-          letter = LETTERS[i]
-          mb = (length.to_f / 1024 / 1024).ceil
-          vol_entries = buffer.volume_index.collect { |v| v.to_s }.join("\n")
-          "#{letter}: #{mb}MB\n#{vol_entries}\n#{buffer.vol.to_s}"
         end
       end
     end

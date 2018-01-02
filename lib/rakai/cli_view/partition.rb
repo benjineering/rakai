@@ -10,9 +10,13 @@ module Rakai
       def render
         table("Partition #{@model.name}") do |t|
           @model.volumes.each_with_index do |v, i|
-            #files = v.files.collect { |f| f.name }.join("\n")
+
+            files = v.read.files.collect do |f|
+              "#{f.type}: #{f.name.to_s}"
+            end
+
             t.add_separator unless i == 0
-            t << [v.name, '']
+            t << [v.name, files.join("\n")]
           end
         end
       end

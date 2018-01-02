@@ -7,11 +7,23 @@ module Rakai
       class Volume
         attr_reader :name, :files
 
-        def initialize(file, index_entry, offset)
+        def initialize(file, index_entry_or_name, partition_or_volume_offset)
           @file = file
           @read = false
-          @name = index_entry.name.to_s
-          @offset = index_entry.offset + offset
+
+          if index_entry_or_name.is_a?(String)
+            @name = index_entry_or_name
+            @offset = partition_or_volume_offset
+          else
+            @name = index_entry_or_name.name.to_s
+            @offset = index_entry_or_name.offset + partition_or_volume_offset
+          end
+        end
+
+        def read
+          v = dup
+          v.read!
+          v
         end
 
         def read!
@@ -20,6 +32,7 @@ module Rakai
           @files = []
 
           data.file_index.each do |e|
+            break unless e.valid?
             @files << File.new(e)
           end
 
@@ -28,6 +41,10 @@ module Rakai
 
         def read?
           @read
+        end
+
+        def dup
+          Volume.new(@file, @name, @offset)
         end
       end
     end
