@@ -10,11 +10,12 @@ module Rakai
 
         def initialize(file, data, index, offset)
           @offset = offset
-          @length = data.length
+          @length = data.len
           @name = Partition.clean_partition_letter(LETTERS[index])
           @volumes = []
 
           data.volume_index.each do |v|
+            break unless v.valid?
             @volumes << Volume.new(file, v, @offset)
           end
         end

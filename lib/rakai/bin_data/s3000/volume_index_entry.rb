@@ -6,14 +6,18 @@ module Rakai
       class VolumeIndexEntry < Rakai::BinData::Base
         akai_string :name, length: 12
         uint16 :start_block
-        uint16 :num
+        uint16 :block_count
 
         def valid?
-          start_block > 0
+          block_count > 0
         end
 
         def offset
           start_block * BLOCK_SIZE
+        end
+
+        def len
+          block_count * BLOCK_SIZE
         end
       end
     end

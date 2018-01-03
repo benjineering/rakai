@@ -27,9 +27,9 @@ module Rakai
         end
 
         def read!
+          @files = []
           @file.seek(@offset)
           data = Rakai::BinData::S3000::Volume.read(@file)
-          @files = []
 
           data.file_index.each do |e|
             break unless e.valid?

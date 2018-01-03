@@ -17,8 +17,8 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
 
         array :partitions, read_until: -> {
           is_valid = element.valid?
-          is_valid &= @prev_length == element.length unless @prev_length.nil?
-          @prev_length = element.length
+          is_valid &= @prev_length == element.len unless @prev_length.nil?
+          @prev_length = element.len
           !is_valid
         } do
           partition partition_index: :index

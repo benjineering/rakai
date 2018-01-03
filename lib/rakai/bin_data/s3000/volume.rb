@@ -14,8 +14,6 @@ The first 17 map entries are marked with the value 16384.
 
 =end
       class Volume < Rakai::BinData::Base
-        #hide :map_and_padding, :three_zeros
-
         #skip length: BLOCK_SIZE * 4
 
         array :file_index, initial_length: 512 do

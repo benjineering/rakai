@@ -17,7 +17,7 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
 
         uint16 :block_count
 
-        buffer :buffer, length: -> { length }, onlyif: -> { valid? } do
+        buffer :buffer, length: -> { len }, onlyif: -> { valid? } do
           skip length: 200
 
           array :volume_index, read_until: -> { !element.valid? } do
@@ -25,7 +25,7 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
           end
         end
 
-        def length
+        def len
           if block_count == END_MARKER || block_count == 0
             return 0
           else
@@ -34,7 +34,7 @@ own experimentation using an S2000 with an internal SCSI SD card drive.
         end
 
         def valid?
-          length > 0
+          len > 0
         end
       end
     end
