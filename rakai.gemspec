@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'byebug'
 
   spec.add_dependency 'bindata', '~> 2.3'
-  spec.add_dependency 'wavefile', '~> 0.7'
   spec.add_dependency 'terminal-table', '~> 1.3'
+  spec.add_dependency 'ffi-portaudio', '~> 0.1'
+  spec.add_dependency 'wavefile', '~> 0.7'
 end

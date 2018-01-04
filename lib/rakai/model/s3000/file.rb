@@ -14,7 +14,7 @@ module Rakai
         attr_reader :name, :type
 
         def initialize(entry)
-          @name = entry.file_name
+          @name = entry.file_name.to_s
           @type = TYPES[entry.file_type.first]
         end
       end

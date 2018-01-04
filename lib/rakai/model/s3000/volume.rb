@@ -27,13 +27,14 @@ module Rakai
         end
 
         def read!
-          @files = []
+          @files = {}
           @file.seek(@offset)
           data = Rakai::BinData::S3000::Volume.read(@file)
 
           data.file_index.each do |e|
             break unless e.valid?
-            @files << File.new(e)
+            f = File.new(e)
+            @files[f.name] = f
           end
 
           @read = true

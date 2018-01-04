@@ -12,12 +12,17 @@ module Rakai
           @offset = offset
           @length = data.len
           @name = Partition.clean_partition_letter(LETTERS[index])
-          @volumes = []
+          @volumes = {}
 
           data.volume_index.each do |v|
             break unless v.valid?
-            @volumes << Volume.new(file, v, @offset)
+            vol = Volume.new(file, v, @offset)
+            @volumes[vol.name.upcase] = vol
           end
+        end
+
+        def volume(name)
+          @volumes[name.upcase]
         end
 
         def self.clean_partition_letter(letter)

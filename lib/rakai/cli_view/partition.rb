@@ -9,8 +9,8 @@ module Rakai
 
       def render
         table("Partition #{@model.name}") do |t|
-          @model.volumes.each_with_index do |v, i|
-            files = v.read.files
+          @model.volumes.values.each_with_index do |v, i|
+            files = v.read.files.values
 
             files.collect! do |f|
               "#{f.type}: #{f.name.to_s}"
