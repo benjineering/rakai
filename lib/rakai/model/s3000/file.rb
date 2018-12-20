@@ -7,7 +7,7 @@ module Rakai
         TYPES = {
           240 => :program,
           243 => :sample,
-          120 =>:effects,
+          120 => :effects,
           237 => :multi
         }
 
