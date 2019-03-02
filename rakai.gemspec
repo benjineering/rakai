@@ -13,8 +13,6 @@ Gem::Specification.new do |spec|
   spec.description   = 'AKAI S* sampler stuff'
   spec.homepage      = 'http://benjineering.com'
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
     spec.metadata['allowed_push_host'] = 'https://rubygems.org'
   else
@@ -22,21 +20,25 @@ Gem::Specification.new do |spec|
       'public gem pushes.'
   end
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+  spec.files  = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
+
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 1.13'
+  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'thor', '~> 0.20'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'byebug'
 
   spec.add_dependency 'bindata', '~> 2.3'
-  spec.add_dependency 'terminal-table', '~> 1.3'
-  spec.add_dependency 'ffi-portaudio', '~> 0.1'
+  spec.add_dependency 'easy_audio', '~> 0.1'
   spec.add_dependency 'wavefile', '~> 0.7'
+  spec.add_dependency 'portmidi', '~> 0.0'
+
+  spec.add_dependency 'thor', '~> 0.20'
+  spec.add_dependency 'terminal-table', '~> 1.3'
 end

@@ -33,7 +33,7 @@ module Rakai
 
           data.file_index.each do |e|
             break unless e.valid?
-            f = File.new(e)
+            f = File.new(@file, e)
             @files[f.name] = f
           end
 

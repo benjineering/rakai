@@ -14,7 +14,7 @@ module Rakai
           @name = Partition.clean_partition_letter(LETTERS[index])
           @volumes = {}
 
-          data.volume_index.each do |v|
+          data.buffer.volume_index.each do |v|
             break unless v.valid?
             vol = Volume.new(file, v, @offset)
             @volumes[vol.name.upcase] = vol

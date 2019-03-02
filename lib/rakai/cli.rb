@@ -1,4 +1,6 @@
 require 'thor'
+require 'easy_audio'
+
 require 'rakai/cli_view/disk'
 require 'rakai/cli_view/partition'
 require 'rakai/cli_view/volume'
@@ -44,9 +46,14 @@ module Rakai
       partition = disk.partition(partition_letter)
       volume = partition.volume(volume_name)
       volume.read!
+      sample = volume.files[sample_name].to_sample
+      sample.read!
 
-      puts volume.inspect
+      EasyAudio.easy_open(sample_rate: sample.freq) do
+        sample.pcm.shift
+      end
 
+      sleep 2
     end
   end
 end
